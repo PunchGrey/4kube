@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kubia
+spec:
+  replicas: 3
+  selector:
+    matchExpressions:
+    - {key: app, operator: In, values: [kubia]}
+    matchLabels:
+      app: kubia
+  template:
+    metadata:
+      labels:
+        app: kubia
+    spec:
+      containers:
+      - image: docker-reg.srv.sec45.ccr.dep4.niitp:5000/4kube:latest
+        name: kubia
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe: 
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+        readinessProbe: # проверка готовности контейнера
+          exec:
+            command:
+            - ls
+            - /var

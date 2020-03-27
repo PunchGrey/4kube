@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubia-manual
+  labels:
+    creation_method: manual
+    env: test
+spec:
+  nodeSelector:
+    master: "true"
+  containers:
+  - image: docker-reg.srv.sec45.ccr.dep4.niitp:5000/4kube:4
+    name: kubia
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 8080
+      initialDelaySeconds: 15

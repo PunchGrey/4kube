@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: aid
+  labels:
+    creation_method: manual
+    env: aid
+spec:
+  containers:
+  - image: docker-reg.srv.sec45.ccr.dep4.niitp:5000/4kube:aid
+    name: aid

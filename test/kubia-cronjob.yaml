@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: batch-job-cron
+spec:
+  schedule: "*/6 * * * *"
+  jobTemplate:
+    spec:
+      completions: 3
+      parallelism: 2
+      template:
+        metadata:
+          labels:
+            app: job-cron
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: main
+            image: docker-reg.srv.sec45.ccr.dep4.niitp:5000/4kube:4.11
